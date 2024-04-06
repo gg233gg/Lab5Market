@@ -21,9 +21,9 @@ public class Date implements Comparable<Date> {
     /**
      * 接受一个格式为xxxx/xx/xx字符串日期，并将其向后调整d天
      */
-    Date(String str, int d) {
+    Date(String str, int bias) {
         this(str);
-        this.nextDay(d);
+        this.nextDay(bias);
     }
 
     /**
@@ -53,8 +53,8 @@ public class Date implements Comparable<Date> {
     /**
      * 将当前日期往后推d天
      */
-    public void nextDay(int d) {
-        for (int i = 0; i < d; i++) {
+    public void nextDay(int bias) {
+        for (int i = 0; i < bias; i++) {
             nextDay();
         }
     }
@@ -109,7 +109,6 @@ public class Date implements Comparable<Date> {
         return (year < date.year) ||
                 (year == date.year && month < date.month) ||
                 (year == date.year && month == date.month && day < date.day);
-
     }
 
 }
