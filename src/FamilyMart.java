@@ -9,10 +9,13 @@ public class FamilyMart {
    }
 
     /**
-     * goodsInfo里包括商品的各项信息，创建该商品，并按其过期日期放入货架，确保货架上最前面的商品是最快过期的
+     * goodsInfo里包括商品的各项信息，创建该商品，并按其过期日期放入货架，确保货架上最前面的商品是最快过期的，如果商品已经过期，直接丢弃
      */
    public void purchase(String[] goodsInfo) {
        Goods goods = new Goods(goodsInfo);
+       if(goods.getExpireDate().compareTo(date)<0) {
+           return;
+       }
        int i=0;
        while(i<shelf.size()) {
            if(goods.compareExpireDate(shelf.get(i))<=0) {
@@ -39,12 +42,13 @@ public class FamilyMart {
             if (shelf.get(i).getName().equals(goodsName)) {
                 turnover += shelf.get(i).getPrice() * discount;
                 shelf.remove(i);
+
                 break;
             }
             i++;
         }
    }
-
+   
     /**
      * 清理当日货架上过期的商品
      */
@@ -52,18 +56,6 @@ public class FamilyMart {
        int key = 0;
        while (key < shelf.size()) {
            if (shelf.get(key).getExpireDate().compareTo(date) > 0) {
-               break;
-           }
-           key++;
-       }
-       for (int i = 0; i < key; i++)
-           shelf.removeFirst();
-   }
-
-   public void clear() {
-       int key = 0;
-       while(key<shelf.size()) {
-           if(shelf.get(key).getExpireDate().compareTo(date)>=0) {
                break;
            }
            key++;
